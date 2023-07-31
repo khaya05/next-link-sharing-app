@@ -17,7 +17,7 @@ module.exports = {
         purple: '#633CFF',
         'purple-hover': '#BEADFF',
         'light-purple': '#EFEBFF',
-        'dark-gray': '#EFEBFF',
+        'dark-gray': '#333333',
         gray: '#737373',
         lines: '#D9D9D9',
         'light-gray': '#FAFAFA',

@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 
-const DesktopLogo = () => {
+const FullLogo = () => {
   return (
     <div>
       <Image
@@ -15,4 +15,4 @@ const DesktopLogo = () => {
   );
 };
 
-export default DesktopLogo;
+export default FullLogo;
