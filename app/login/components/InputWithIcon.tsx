@@ -2,7 +2,7 @@
 
 import clsx from 'clsx';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 interface InputProps {
   name: string;
@@ -12,6 +12,8 @@ interface InputProps {
   placeholder: string;
   error?: string;
   required?: boolean;
+  register: any;
+  errors: any;
 }
 
 const InputWithIcon: React.FC<InputProps> = ({
@@ -22,9 +24,13 @@ const InputWithIcon: React.FC<InputProps> = ({
   placeholder,
   error,
   required,
+  register,
+  errors,
 }) => {
   const [isFocus, setIsFocus] = useState(false);
-  const formError = !true;
+  const formError = useMemo(() => (errors.name ? true : false), [errors]);
+  console.log('formError', formError)
+  console.log('errors', errors)
 
   return (
     <div>
@@ -67,6 +73,7 @@ const InputWithIcon: React.FC<InputProps> = ({
             required={required}
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
+            {...register(name)}
             className={clsx(
               'text-base',
               'caret-purple',
@@ -82,7 +89,7 @@ const InputWithIcon: React.FC<InputProps> = ({
             )}
           />
         </div>
-        {error && (
+        {errors.name && (
           <p
             className={clsx(
               'text-red',
@@ -94,7 +101,7 @@ const InputWithIcon: React.FC<InputProps> = ({
               formError && 'ml-3'
             )}
           >
-            {error}
+            {errors.name.message}
           </p>
         )}
       </div>

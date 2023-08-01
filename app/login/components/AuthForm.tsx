@@ -2,10 +2,19 @@
 
 import { useState } from 'react';
 import FullLogo from '../../Components/Logo/FullLogo';
-import InputWithIcon from '../../Components/Input/InputWithIcon';
+import InputWithIcon from './InputWithIcon';
 import GoogleLogin from './GoogleLogin';
+import { ZodType, z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 type FormAction = 'LOGIN' | 'REGISTER';
+
+type FormData = {
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
 
 export default function AuthForm() {
   const [formType, setFormType] = useState<FormAction>('LOGIN');
@@ -15,6 +24,35 @@ export default function AuthForm() {
     formType === 'LOGIN'
       ? 'Add your details below to get back into the app'
       : 'Let’s get you started sharing your links!';
+
+  // zod schemas
+  const registerSchema: ZodType<FormData> = z
+    .object({
+      email: z.string().email(),
+      password: z.string().min(8).max(20),
+      confirmPassword: z.string().min(8).max(20),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: 'Please check again',
+      path: ['confirmPassword'],
+    });
+
+  const loginSchema: ZodType<Partial<FormData>> = z.object({
+    email: z.string().email(),
+    password: z.string().min(8).max(20),
+  });
+
+  const schema = formType === 'LOGIN' ? loginSchema : registerSchema;
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({ resolver: zodResolver(schema) });
+
+  const submitFormData = (data: FormData) => {
+    console.log(data);
+  };
 
   return (
     <div
@@ -27,6 +65,7 @@ export default function AuthForm() {
     >
       <FullLogo />
       <form
+        onSubmit={handleSubmit(submitFormData)}
         className="
         bg-white
         md:w-[29.75rem]
@@ -62,15 +101,19 @@ export default function AuthForm() {
           <InputWithIcon
             name="email"
             type="text"
+            register={register}
+            errors={errors}
             label="Email address"
             icon="/images/icon-email.svg"
             placeholder="e.g alex@email.com"
-            required={true}
+            // required={true}
             error="Can't be empty"
           />
           <InputWithIcon
             name="password"
             type="password"
+            register={register}
+            errors={errors}
             label="Password"
             icon="/images/icon-password.svg"
             placeholder={
@@ -79,18 +122,20 @@ export default function AuthForm() {
                 : 'At least 8 characters'
             }
             error="Please check again"
-            required={true}
+            // required={true}
           />
           {formType === 'REGISTER' && (
             <>
               <InputWithIcon
                 name="confirmPassword"
                 type="password"
+                register={register}
+                errors={errors}
                 label="Confirm password"
                 icon="/images/icon-password.svg"
                 placeholder="At least 8 characters"
                 error="Please check again"
-                required={true}
+                // required={true}
               />
 
               <p
@@ -107,6 +152,7 @@ export default function AuthForm() {
           )}
         </div>
         <button
+          type="submit"
           className="
             h-[2.75rem]
             w-full
