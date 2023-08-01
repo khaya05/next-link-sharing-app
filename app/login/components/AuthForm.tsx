@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import FullLogo from '../../Components/Logo/FullLogo';
 import InputWithIcon from '../../Components/Input/InputWithIcon';
+import GoogleLogin from './GoogleLogin';
 
 type FormAction = 'LOGIN' | 'REGISTER';
 
@@ -54,6 +55,9 @@ export default function AuthForm() {
         >
           {legend}
         </legend>
+
+        <GoogleLogin />
+
         <div>
           <InputWithIcon
             name="email"
