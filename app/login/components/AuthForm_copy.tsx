@@ -1,12 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import FullLogo from '../../Components/Logo/FullLogo';
-import InputWithIcon from './InputWithIcon';
+import InputWithIcon from './InputWithIcon_copy';
 import GoogleLogin from './GoogleLogin';
-import { ZodType, z } from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 
 type FormAction = 'LOGIN' | 'REGISTER';
 
@@ -25,33 +22,39 @@ export default function AuthForm() {
       ? 'Add your details below to get back into the app'
       : 'Let’s get you started sharing your links!';
 
-  // zod schemas
-  const registerSchema: ZodType<FormData> = z
-    .object({
-      email: z.string().email(),
-      password: z.string().min(8).max(20),
-      confirmPassword: z.string().min(8).max(20),
-    })
-    .refine((data) => data.password === data.confirmPassword, {
-      message: 'Please check again',
-      path: ['confirmPassword'],
-    });
-
-  const loginSchema: ZodType<Partial<FormData>> = z.object({
-    email: z.string().email(),
-    password: z.string().min(8).max(20),
+  const [credentials, setCredentials] = useState<FormData>({
+    email: '',
+    password: '',
+    confirmPassword: '',
   });
 
-  const schema = formType === 'LOGIN' ? loginSchema : registerSchema;
+  const formRef = useRef(null);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({ resolver: zodResolver(schema) });
+  const [isInputValid, setIsInputValid] = useState(true);
 
-  const submitFormData = (data: FormData) => {
-    console.log('data',data);
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const inputElement = e.currentTarget;
+    const { name, value } = inputElement;
+    setCredentials((state) => {
+      return { ...state, [name]: value };
+    });
+    setIsInputValid(inputElement.checkValidity());
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const formElement = event.currentTarget;
+    const isFormValid = formElement.checkValidity();
+
+    if (isFormValid) {
+      // Perform the form submission logic here
+      console.log('Form is valid. Submitting...');
+    } else {
+      // Set the isInputValid state to trigger error message or styles
+      setIsInputValid(false);
+    }
+    console.log(isInputValid);
   };
 
   return (
@@ -69,13 +72,13 @@ export default function AuthForm() {
     >
       <FullLogo />
       <form
-        onSubmit={handleSubmit(submitFormData)}
+        ref={formRef}
+        onSubmit={(e: FormEvent<HTMLFormElement>) => handleSubmit(e)}
         className="
-        bg-white
-        md:w-[29.75rem]
-        md:p-10
-        md:rounded-lg
-
+          bg-white
+          md:w-[29.75rem]
+          md:p-10
+          md:rounded-lg
         "
       >
         <h2
@@ -107,19 +110,18 @@ export default function AuthForm() {
           <InputWithIcon
             name="email"
             type="text"
-            register={register}
-            errors={errors}
             label="Email address"
             icon="/images/icon-email.svg"
             placeholder="e.g alex@email.com"
             // required={true}
             error="Can't be empty"
+            value={credentials.email}
+            onChange={onChange}
+            isInputValid={isInputValid}
           />
           <InputWithIcon
             name="password"
             type="password"
-            register={register}
-            errors={errors}
             label="Password"
             icon="/images/icon-password.svg"
             placeholder={
@@ -128,20 +130,26 @@ export default function AuthForm() {
                 : 'At least 8 characters'
             }
             error="Please check again"
-            // required={true}
+            pattern="^.{8,}$"
+            required={true}
+            value={credentials.password}
+            onChange={onChange}
+            isInputValid={isInputValid}
           />
           {formType === 'REGISTER' && (
             <>
               <InputWithIcon
                 name="confirmPassword"
                 type="password"
-                register={register}
-                errors={errors}
                 label="Confirm password"
                 icon="/images/icon-password.svg"
                 placeholder="At least 8 characters"
                 error="Please check again"
-                // required={true}
+                required={true}
+                value={credentials.confirmPassword}
+                pattern={credentials.password}
+                onChange={onChange}
+                isInputValid={isInputValid}
               />
 
               <p

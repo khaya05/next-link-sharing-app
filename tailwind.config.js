@@ -24,6 +24,12 @@ module.exports = {
         red: '#FF3939',
       },
     },
+
+    screens: {
+      'sm': '23.4375rem',
+      'md': '48rem',
+      'lg': '90rem'
+    }
   },
   plugins: [],
 };

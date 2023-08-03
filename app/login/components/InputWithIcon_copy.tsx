@@ -2,7 +2,9 @@
 
 import clsx from 'clsx';
 import Image from 'next/image';
-import { useMemo, useRef, useState } from 'react';
+import { ChangeEvent, FormEvent, useMemo, useRef, useState } from 'react';
+
+import './local.css';
 
 interface InputProps {
   name: string;
@@ -12,8 +14,12 @@ interface InputProps {
   placeholder: string;
   error?: string;
   required?: boolean;
-  register: any;
-  errors: any;
+  pattern?: string;
+  value: any;
+  isInputValid: boolean;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  // register: any;
+  // errors: any;
 }
 
 const InputWithIcon: React.FC<InputProps> = ({
@@ -24,18 +30,17 @@ const InputWithIcon: React.FC<InputProps> = ({
   placeholder,
   error,
   required,
-  register,
-  errors,
+  value,
+  onChange,
+  pattern,
+  isInputValid
+  // register,
+  // errors,
 }) => {
   const [isFocus, setIsFocus] = useState(false);
   const currentInput = useRef();
-  
-  const formError = useMemo(() => {
-    return errors.hasOwnProperty(name) ? true : false;
-  }, [errors, name]);
 
-  console.log('formError', formError);
-  console.log('errors', errors);
+  const formError = false;
 
   return (
     <div>
@@ -58,14 +63,14 @@ const InputWithIcon: React.FC<InputProps> = ({
           'flex',
           'justify-between',
           'items-center',
-          'input-container',
+          'first-container',
           !formError && 'hover:border-0',
           !formError && 'hover:ring-[1px]',
           !formError && 'hover:ring-purple-hover',
           !formError &&
             isFocus &&
             'border-0 ring-[1px] ring-purple input-box-shadow shadow-xl shadow-purple/20',
-          isFocus && formError && 'border-0 ring-[1px] ring-red shadow-none'
+          isFocus && !isInputValid && 'border-0 ring-[1px] ring-red shadow-none'
         )}
       >
         <div className="flex justify-between items-center gap-3 w-full | second-container">
@@ -75,12 +80,15 @@ const InputWithIcon: React.FC<InputProps> = ({
           <input
             type={type}
             id={name}
+            name={name}
             placeholder={placeholder}
             required={required}
+            pattern={pattern}
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
-            {...register(name)}
-            ref={currentInput}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e)}
+            // focused={isFocus.toString()}
+            value={value}
             className={clsx(
               'text-base',
               'caret-purple',
@@ -96,7 +104,7 @@ const InputWithIcon: React.FC<InputProps> = ({
             )}
           />
         </div>
-        {formError && (
+        {!isInputValid && (
           <p
             className={clsx(
               'text-red',
