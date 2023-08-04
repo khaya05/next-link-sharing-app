@@ -1,9 +1,18 @@
 'use client';
 
-import { ChangeEvent, FormEvent, useRef, useState } from 'react';
+import {
+  ChangeEvent,
+  FormEvent,
+  FormEventHandler,
+  useRef,
+  useState,
+} from 'react';
 import FullLogo from '../../Components/Logo/FullLogo';
 import InputWithIcon from './InputWithIcon_copy';
 import GoogleLogin from './GoogleLogin';
+import { signIn } from 'next-auth/react';
+import Alert from '@/app/Components/Error/Alert';
+import { useRouter } from 'next/navigation';
 
 type FormAction = 'LOGIN' | 'REGISTER';
 
@@ -15,6 +24,8 @@ type FormData = {
 
 export default function AuthForm() {
   const [formType, setFormType] = useState<FormAction>('LOGIN');
+  const [error, setError] = useState('');
+  const router = useRouter();
 
   const heading = formType === 'LOGIN' ? 'Login' : 'Create Account';
   const legend =
@@ -41,17 +52,35 @@ export default function AuthForm() {
     setIsInputValid(inputElement.checkValidity());
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const signUserIn = async () => {
+    const res = await signIn('credentials', {
+      email: credentials.email,
+      password: credentials.password,
+      redirect: false,
+    });
+
+    if (res?.error) return setError(res.error);
+    router.replace('/main');
+  };
+
+  const signUpUser = async () => {
+    const res = await fetch('/api/auth/users', {
+      method: 'POST',
+      body: JSON.stringify(credentials),
+    }).then((res) => res.json());
+
+    console.log(res);
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formElement = event.currentTarget;
     const isFormValid = formElement.checkValidity();
 
     if (isFormValid) {
-      // Perform the form submission logic here
-      console.log('Form is valid. Submitting...');
+      formType === 'LOGIN' ? signUserIn() : signUpUser();
     } else {
-      // Set the isInputValid state to trigger error message or styles
       setIsInputValid(false);
     }
     console.log(isInputValid);
@@ -81,6 +110,7 @@ export default function AuthForm() {
           md:rounded-lg
         "
       >
+        {error !== '' && <Alert value={error} />}
         <h2
           className="
             text-dark-gray
@@ -113,7 +143,7 @@ export default function AuthForm() {
             label="Email address"
             icon="/images/icon-email.svg"
             placeholder="e.g alex@email.com"
-            // required={true}
+            required={true}
             error="Can't be empty"
             value={credentials.email}
             onChange={onChange}
