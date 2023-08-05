@@ -14,12 +14,12 @@ const PhoneMockup = () => {
     >
       <div
         className="
-          bg-[url('/images/illustration-phone-mockup.svg')]
-          no-repeat
-          grid
-          place-items-center
-          w-[19.1875rem] 
-          h-[39.4375rem]
+        no-repeat
+        grid
+        place-items-center
+        w-[19.1875rem] 
+        h-[39.4375rem]
+        bg-[url('/images/illustration-phone-mockup.svg')]
         "
       >
         <div className="w-[17.8125rem] h-[38.1875rem]"></div>
