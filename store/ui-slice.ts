@@ -1,9 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { RootState } from './store';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 interface InitialState {
-  currentPage: 'LINKS' | 'PROFILE';
+  currentPage: string;
 }
+
 
 const initialState: InitialState = {
   currentPage: 'LINKS',
@@ -13,15 +13,12 @@ export const uiSlice = createSlice({
   name: 'ui',
   initialState,
   reducers: {
-    changePage: (state) => {
-      let currentState = state.currentPage;
-      currentState === 'LINKS'
-        ? (currentState = 'PROFILE')
-        : (currentState = 'LINKS');
+    setCurrentPage: (state, action: PayloadAction<string>) => {
+      state.currentPage = action.payload;
     },
   },
 });
 
-export const { changePage } = uiSlice.actions;
+export const { setCurrentPage } = uiSlice.actions;
 
 export default uiSlice.reducer;

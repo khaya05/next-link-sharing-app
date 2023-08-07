@@ -4,7 +4,7 @@ import Main from './Components/Main';
 import Navbar from './Components/Navbar';
 import PhoneMockup from './Components/PhoneMockup';
 
-import './main.css'
+import './main.css';
 
 export default function page() {
   return (
@@ -17,9 +17,8 @@ export default function page() {
             <PhoneMockup />
           </div>
 
-          <div className='lg:w-[56%]'>
-
-          <Main />
+          <div className="lg:w-[56%]">
+            <Main />
           </div>
         </div>
       </div>
