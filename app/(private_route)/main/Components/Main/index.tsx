@@ -17,11 +17,11 @@ const Main = () => {
         rounded-[12px]
     "
     >
-      <div className="border h-[88.6%]">
+      <div className="h-[88.6%]">
         {currentPage === 'LINKS' ? <Links /> : <Profile />}
       </div>
 
-      <div className="h-[11.4%]">
+      <div className="h-[5.875rem] border-t-[2px] border-t-lines">
         <SaveButton />
       </div>
     </div>

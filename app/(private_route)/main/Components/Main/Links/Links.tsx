@@ -11,8 +11,8 @@ function Links() {
         legend="Add/edit/remove links below and then share all your profiles with the world!"
       />
       <button
-        type='button'
-        className='
+        type="button"
+        className="
           w-full
           text-purple
           ring-[1px]
@@ -25,13 +25,12 @@ function Links() {
           md:mb-6
           hover:bg-light-purple
           hover:cursor-pointer
-          '
+          "
       >
         + Add new link
       </button>
-      <div>
-      <GetStarted />
-
+      <div className='md:h-[31rem]'>
+        <GetStarted />
       </div>
     </div>
   );
