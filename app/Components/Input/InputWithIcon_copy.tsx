@@ -4,8 +4,6 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import { ChangeEvent, FormEvent, useMemo, useRef, useState } from 'react';
 
-import './local.css';
-
 interface InputProps {
   name: string;
   type: string;

@@ -2,7 +2,7 @@
 
 import Heading from '../shared/Heading';
 import GetStarted from './GetStarted';
-import CustomSelect from './LinkInput';
+import CustomSelect from './CustomSelect';
 
 function Links() {
   return (
