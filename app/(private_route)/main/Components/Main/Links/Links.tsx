@@ -2,6 +2,7 @@
 
 import Heading from '../shared/Heading';
 import GetStarted from './GetStarted';
+import CustomSelect from './LinkInput';
 
 function Links() {
   return (
@@ -29,8 +30,9 @@ function Links() {
       >
         + Add new link
       </button>
-      <div className='md:h-[31rem]'>
-        <GetStarted />
+      <div className="md:h-[31rem]">
+        {/* <GetStarted /> */}
+        <CustomSelect />
       </div>
     </div>
   );
