@@ -24,6 +24,7 @@ const LinkInput: React.FC = () => {
         bg-light-gray
         p-5
         rounded-[12px]
+        mb-6
       "
     >
       <div
@@ -81,7 +82,7 @@ const LinkInput: React.FC = () => {
           type="text"
           placeholder="e.g. https://www.github.com/johnappleseed"
           icon="/images/icon-link.svg"
-          value={link}
+          // value={link}
           isInputValid={true}
           onChange={handleChange}
           required={true}

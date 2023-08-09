@@ -3,13 +3,24 @@
 import Heading from '../shared/Heading';
 import GetStarted from './GetStarted';
 import LinkInput from './LinkInput';
-import { useAppSelector } from '@/store/store';
-import { useMemo } from 'react';
+import { useAppDispatch, useAppSelector } from '@/store/store';
+import { MouseEventHandler, useMemo } from 'react';
 import RenderLinks from './RenderLinks';
+import { addLink } from '@/store/user-data-slice';
 
 function Links() {
+  const dispatch = useAppDispatch();
   const links = useAppSelector((state) => state.user.links);
-  const hasLinks = useMemo(() => links.length === 0, [links]);
+  const hasLinks = useMemo(() => links.length !== 0, [links]);
+
+  const handleClick: MouseEventHandler<HTMLButtonElement> = () => {
+    const newLinkForm = {
+      id: 'twitch',
+      link: 'link.com',
+      platform: 'twitch',
+    };
+    dispatch(addLink(newLinkForm));
+  };
 
   return (
     <div className="md:p-10">
@@ -18,6 +29,7 @@ function Links() {
         legend="Add/edit/remove links below and then share all your profiles with the world!"
       />
       <button
+        onClick={handleClick}
         type="button"
         className="
           w-full

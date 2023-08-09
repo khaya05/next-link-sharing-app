@@ -13,7 +13,7 @@ interface InputProps {
   error?: string;
   required?: boolean;
   pattern?: string;
-  value: any;
+  // value: any;
   isInputValid: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   // register: any;
@@ -28,7 +28,7 @@ const InputWithIcon: React.FC<InputProps> = ({
   placeholder,
   error,
   required,
-  value,
+  // value,
   onChange,
   pattern,
   isInputValid
@@ -86,7 +86,7 @@ const InputWithIcon: React.FC<InputProps> = ({
             onBlur={() => setIsFocus(false)}
             onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e)}
             // focused={isFocus.toString()}
-            value={value}
+            // value={value}
             className={clsx(
               'bg-inherit',
               'text-base',
