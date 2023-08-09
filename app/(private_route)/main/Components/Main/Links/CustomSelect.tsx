@@ -19,7 +19,44 @@ const CustomSelect: React.FC = () => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {};
 
   return (
-    <LightGrayCard>
+    <div
+      className="
+        bg-light-gray
+        p-5
+        rounded-[12px]
+      "
+    >
+      <div
+        className="
+          flex
+          justify-between
+          items-center
+          text-gray
+          text-base 
+        "
+      >
+        <div
+          className="
+            flex
+            gap-2
+            items-center
+            mb-3
+        "
+        >
+          <Image
+            width={16}
+            height={16}
+            src="/images/icon-drag-and-drop.svg"
+            alt="icon"
+          />
+          <p className="font-bold">Link #1</p>
+        </div>
+
+        <button>Remove</button>
+      </div>
+      <p className="text-dark-gray leading-[1.125rem] text-[0.75rem]">
+        Platform
+      </p>
       <Select
         options={platformOptions}
         // onChange={handlePlatformChange}
@@ -36,18 +73,21 @@ const CustomSelect: React.FC = () => {
         )}
       />
 
-      <InputWithIcon
-        label="Link"
-        name="link"
-        error="can't be empty"
-        type="text"
-        placeholder="e.g. https://www.github.com/johnappleseed"
-        icon="/images/icon-link.svg"
-        value={link}
-        isInputValid={true}
-        onChange={handleChange}
-      />
-    </LightGrayCard>
+      <div className="mt-3">
+        <InputWithIcon
+          label="Link"
+          name="link"
+          error="can't be empty"
+          type="text"
+          placeholder="e.g. https://www.github.com/johnappleseed"
+          icon="/images/icon-link.svg"
+          value={link}
+          isInputValid={true}
+          onChange={handleChange}
+          required={true}
+        />
+      </div>
+    </div>
   );
 };
 

@@ -55,7 +55,7 @@ const InputWithIcon: React.FC<InputProps> = ({
           'px-7',
           'py-3',
           'h-14',
-          'mb-6',
+          // 'mb-6',
           'w-full',
           'rounded-[8px]',
           'flex',
@@ -88,6 +88,7 @@ const InputWithIcon: React.FC<InputProps> = ({
             // focused={isFocus.toString()}
             value={value}
             className={clsx(
+              'bg-inherit',
               'text-base',
               'caret-purple',
               'leading-[1.5rem]',

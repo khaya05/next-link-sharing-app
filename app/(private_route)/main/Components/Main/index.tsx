@@ -1,23 +1,22 @@
-'use client'
+'use client';
 
-import React from 'react';
+import React, { FormEvent } from 'react';
 import Links from './Links/Links';
 import Profile from './Profile/Profile';
-import {useAppSelector} from '@/store/store'
+import { useAppSelector } from '@/store/store';
+import SaveButton from './shared/SaveButton';
 
 const Main = () => {
   const currentPage = useAppSelector((state) => state.ui.currentPage);
 
-  const handleSubmitLinks = () => {
-    // Handle form submission for Links section
-    // event.preventDefault();
-    // ... handle saving links
+  const handleSubmitLinks = (e:FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log('links submited')
   };
 
-  const handleSubmitProfile = () => {
-    // Handle form submission for Profile section
-    // event.preventDefault();
-    // ... handle saving profile data
+  const handleSubmitProfile = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    console.log('profile data submited')
   };
 
   return (
@@ -31,26 +30,38 @@ const Main = () => {
     >
       <div className="h-[88.6%]">
         {currentPage === 'LINKS' ? (
-          <form onSubmit={handleSubmitLinks}>
+          <form
+            id='links-form'
+            onSubmit={(e: FormEvent<HTMLFormElement>) => handleSubmitLinks(e)}
+          >
             <Links />
           </form>
         ) : (
-          <form onSubmit={handleSubmitProfile}>
+            <form
+              id='profile-form'
+              onSubmit={(e: FormEvent<HTMLFormElement>) => handleSubmitProfile(e)}
+          >
             <Profile />
           </form>
         )}
       </div>
 
       <div className="h-[5.875rem] border-t-[2px] border-t-lines">
-        <button
+        <SaveButton />
+        {/* <button
           type="submit"
           form={currentPage === 'LINKS' ? 'links-form' : 'profile-form'}
         >
-          Save
-        </button>
+          save
+        </button> */}
       </div>
     </div>
   );
 };
 
 export default Main;
+
+// <button
+//   type="submit"
+//   form={currentPage === 'LINKS' ? 'links-form' : 'profile-form'}
+// ></button>

@@ -1,10 +1,14 @@
 'use client';
 
+import { useAppSelector } from "@/store/store";
+
 // interface Props {
 //   onClick:MouseEvent
 // }
 
 const SaveButton = () => {
+  const currentPage = useAppSelector(state => state.ui.currentPage)
+
   return (
     <div
       className="
@@ -14,6 +18,8 @@ const SaveButton = () => {
     "
     >
       <button
+        type='submit'
+        form={currentPage === 'LINKS' ? 'links-form' : 'profile-form'}
         className="
           h-[2.875rem]
           w-[5.6875rem]

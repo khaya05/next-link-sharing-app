@@ -3,8 +3,13 @@
 import Heading from '../shared/Heading';
 import GetStarted from './GetStarted';
 import CustomSelect from './CustomSelect';
+import { useAppSelector } from '@/store/store';
+import { useMemo } from 'react';
 
 function Links() {
+  const links = useAppSelector((state) => state.user.links);
+  const hasLinks = useMemo(() => links.length === 0, [links]);
+
   return (
     <div className="md:p-10">
       <Heading
@@ -31,8 +36,7 @@ function Links() {
         + Add new link
       </button>
       <div className="md:h-[31rem]">
-        {/* <GetStarted /> */}
-        <CustomSelect />
+        {hasLinks ? <CustomSelect /> : <GetStarted />}
       </div>
     </div>
   );
