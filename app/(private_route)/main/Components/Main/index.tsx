@@ -1,10 +1,10 @@
 'use client';
 
 import React, { FormEvent } from 'react';
-import Links from './Links/Links';
-import Profile from './Profile/Profile';
+import Links from '../Links/Links';
+import Profile from '../Profile/Profile';
 import { useAppSelector } from '@/store/store';
-import SaveButton from './shared/SaveButton';
+import SaveButton from '../shared/SaveButton';
 
 const Main = () => {
   const currentPage = useAppSelector((state) => state.ui.currentPage);
