@@ -8,7 +8,7 @@ import InputWithIcon from '@/app/Components/Input/InputWithIcon_copy';
 import LightGrayCard from '../shared/LightGrayCard';
 import platformOptions from './platforms';
 
-const CustomSelect: React.FC = () => {
+const LinkInput: React.FC = () => {
   const handlePlatformChange = (selectedOption: OptionTypeBase) => {
     // Handle selected platform
     console.log('Selected Platform:', selectedOption);
@@ -91,4 +91,4 @@ const CustomSelect: React.FC = () => {
   );
 };
 
-export default CustomSelect;
+export default LinkInput;
