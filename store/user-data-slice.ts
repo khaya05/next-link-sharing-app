@@ -39,18 +39,38 @@ export const userSlice = createSlice({
       state.lastName = lastName;
       state.email = email;
     },
+
     addLink: (state, action: PayloadAction<Link>) => {
       state.links.push(action.payload);
     },
+
     removeLink: (state, action: PayloadAction<string>) => {
       const index = state.links.findIndex((link) => link.id === action.payload);
       if (index !== -1) {
         state.links = state.links.filter((link) => link.id !== action.payload);
       }
     },
+
+    setPlatform: (state, action: PayloadAction<Partial<Link>>) => {
+      const index = state.links.findIndex(
+        (link) => link.id === action.payload.id
+      );
+      if (index !== -1) {
+        state.links[index].platform = action.payload.platform!;
+      }
+    },
+
+    setLink: (state, action: PayloadAction<Partial<Link>>) => {
+      const index = state.links.findIndex(
+        (link) => link.id === action.payload.id
+      );
+      if (index !== -1) {
+        state.links[index].link = action.payload.link!;
+      }
+    },
   },
 });
 
-export const { setUserProfile, addLink, removeLink } = userSlice.actions;
+export const { setUserProfile, addLink, removeLink, setPlatform, setLink } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -7,8 +7,7 @@ import OptionTypeBase from 'react-select';
 import InputWithIcon from '@/app/Components/Input/InputWithIcon_copy';
 import platformOptions from './platforms';
 import { useAppDispatch } from '@/store/store';
-import { removeLink } from '@/store/user-data-slice';
-import { setPlatform } from '@/store/link-slice';
+import { removeLink, setPlatform, setLink } from '@/store/user-data-slice';
 
 import './select.css';
 
@@ -20,35 +19,24 @@ interface Props {
 const LinkInput: React.FC<Props> = ({ id, no }) => {
   const dispatch = useAppDispatch();
   const [url, setUrl] = useState('');
-  const [link, setCurrentLink] = useState('');
 
   const handlePlatformChange = (selectedOption: OptionTypeBase) => {
-    const platform = selectedOption?.value;
-    dispatch(setPlatform(platform));
+    const { value } = selectedOption;
+    dispatch(setPlatform({ id, platform: value }));
   };
 
-  const handleClick = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>, id: string) => {
     e.preventDefault();
-    setUrl(e.target.value);
+    const link = e.target.value;
+    dispatch(setLink({ id, link }));
   };
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {};
 
   const handleRemoveLink = (linkId: string) => {
-    console.log(linkId);
-
     dispatch(removeLink(linkId));
   };
 
   return (
-    <div
-      className="
-        bg-light-gray
-        p-5
-        rounded-[12px]
-        mb-6
-      "
-    >
+    <div className="bg-light-gray p-5 rounded-[12px] mb-6">
       <div
         className="
           flex
@@ -58,14 +46,7 @@ const LinkInput: React.FC<Props> = ({ id, no }) => {
           text-base 
         "
       >
-        <div
-          className="
-            flex
-            gap-2
-            items-center
-            mb-3
-        "
-        >
+        <div className="flex gap-2 items-center mb-3">
           <Image
             width={16}
             height={16}
@@ -77,9 +58,13 @@ const LinkInput: React.FC<Props> = ({ id, no }) => {
 
         <button onClick={() => handleRemoveLink(id)}>Remove</button>
       </div>
+
+      {/* dropdown */}
+
       <p className="text-dark-gray leading-[1.125rem] text-[0.75rem]">
         Platform
       </p>
+
       <Select
         options={platformOptions}
         onChange={handlePlatformChange}
@@ -99,6 +84,7 @@ const LinkInput: React.FC<Props> = ({ id, no }) => {
         )}
       />
 
+      {/* custom link input */}
       <div className="mt-3">
         <InputWithIcon
           label="Link"
@@ -107,9 +93,9 @@ const LinkInput: React.FC<Props> = ({ id, no }) => {
           type="text"
           placeholder="e.g. https://www.github.com/johnappleseed"
           icon="/images/icon-link.svg"
-          value={link}
+          value={url}
           isInputValid={true}
-          onChange={handleClick}
+          onChange={(e) => handleChange(e, id)}
           required={true}
         />
       </div>
