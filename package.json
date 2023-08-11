@@ -41,6 +41,7 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
+    "@types/react-beautiful-dnd": "^13.1.4",
     "nanoid": "^4.0.2"
   }
 }

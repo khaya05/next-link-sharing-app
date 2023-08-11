@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import React, { ChangeEvent, MouseEventHandler, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import Select from 'react-select';
 import OptionTypeBase from 'react-select';
 import InputWithIcon from '@/app/Components/Input/InputWithIcon_copy';
@@ -38,14 +38,7 @@ const LinkInput: React.FC<Props> = ({ id, no }) => {
   return (
     <div className="bg-light-gray p-5 rounded-[12px] mb-6">
       <div
-        className="
-          flex
-          justify-between
-          items-center
-          text-gray
-          text-base 
-        "
-      >
+        className=" flex justify-between items-center text-gray text-base">
         <div className="flex gap-2 items-center mb-3">
           <Image
             width={16}

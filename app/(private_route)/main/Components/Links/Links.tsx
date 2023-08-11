@@ -2,18 +2,16 @@
 
 import Heading from '../shared/Heading';
 import GetStarted from './GetStarted';
-import LinkInput from './LinkInput';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import { MouseEventHandler, useMemo } from 'react';
 import RenderLinks from './RenderLinks';
 import { addLink } from '@/store/user-data-slice';
-import {nanoid} from 'nanoid'
+import { nanoid } from 'nanoid';
+import { Droppable } from 'react-beautiful-dnd';
 
 function Links() {
   const dispatch = useAppDispatch();
   const links = useAppSelector((state) => state.user.links);
-  const platform = useAppSelector(state => state.link.platform);
-
   const hasLinks = useMemo(() => links.length !== 0, [links]);
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = () => {
@@ -52,7 +50,18 @@ function Links() {
         + Add new link
       </button>
       <div className="md:h-[31rem]">
-        {hasLinks ? <RenderLinks /> : <GetStarted />}
+        {hasLinks ? (
+          <Droppable droppableId="links">
+            {(provided) => (
+              <div {...provided.droppableProps} ref={provided.innerRef}>
+                <RenderLinks />
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        ) : (
+          <GetStarted />
+        )}
       </div>
     </div>
   );
