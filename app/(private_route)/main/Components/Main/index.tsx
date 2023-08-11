@@ -41,19 +41,14 @@ const Main = () => {
               id='profile-form'
               onSubmit={(e: FormEvent<HTMLFormElement>) => handleSubmitProfile(e)}
           >
-            <Profile />
+              {/* <Profile /> */}
+              <div>profile</div>
           </form>
         )}
       </div>
 
       <div className="h-[5.875rem] border-t-[2px] border-t-lines">
         <SaveButton />
-        {/* <button
-          type="submit"
-          form={currentPage === 'LINKS' ? 'links-form' : 'profile-form'}
-        >
-          save
-        </button> */}
       </div>
     </div>
   );

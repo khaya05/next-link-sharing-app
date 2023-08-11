@@ -7,17 +7,20 @@ import { useAppDispatch, useAppSelector } from '@/store/store';
 import { MouseEventHandler, useMemo } from 'react';
 import RenderLinks from './RenderLinks';
 import { addLink } from '@/store/user-data-slice';
+import {nanoid} from 'nanoid'
 
 function Links() {
   const dispatch = useAppDispatch();
   const links = useAppSelector((state) => state.user.links);
+  const platform = useAppSelector(state => state.link.platform);
+
   const hasLinks = useMemo(() => links.length !== 0, [links]);
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = () => {
     const newLinkForm = {
-      id: 'twitch',
-      link: 'link.com',
-      platform: 'twitch',
+      id: nanoid(),
+      link: '',
+      platform: '',
     };
     dispatch(addLink(newLinkForm));
   };
