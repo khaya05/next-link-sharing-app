@@ -2,15 +2,15 @@
 
 import { useAppSelector } from '@/store/store';
 import LinkInput from './LinkInput';
-import { DroppableProvided, Draggable } from 'react-beautiful-dnd';
+import { Draggable } from 'react-beautiful-dnd';
 
-const RenderLinks= () => {
+const RenderLinks = () => {
   const links = useAppSelector((state) => state.user.links);
 
   return (
     <>
       {links.map((link, index) => (
-        <Draggable key={link.id} draggableId={index.toString()} index={index}>
+        <Draggable key={link.id} draggableId={link.id} index={index}>
           {(provided) => (
             <div
               {...provided.draggableProps}

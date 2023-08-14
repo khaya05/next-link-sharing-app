@@ -3,7 +3,6 @@
 import Main from './Components/Main';
 import Navbar from './Components/Navbar';
 import PhoneMockup from './Components/PhoneMockup';
-import { DragDropContext } from 'react-beautiful-dnd';
 
 import './main.css';
 
@@ -19,9 +18,7 @@ export default function page() {
           </div>
 
             <div className="lg:w-[56%]">
-          <DragDropContext onDragEnd={(result, provided) => { }} >
               <Main />
-          </DragDropContext>
             </div>
         </div>
       </div>

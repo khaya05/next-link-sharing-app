@@ -68,9 +68,20 @@ export const userSlice = createSlice({
         state.links[index].link = action.payload.link!;
       }
     },
+
+    updateLinks: (state, action: PayloadAction<Link[]>) => {
+      state.links = action.payload;
+    },
   },
 });
 
-export const { setUserProfile, addLink, removeLink, setPlatform, setLink } = userSlice.actions;
+export const {
+  setUserProfile,
+  addLink,
+  removeLink,
+  setPlatform,
+  setLink,
+  updateLinks,
+} = userSlice.actions;
 
 export default userSlice.reducer;

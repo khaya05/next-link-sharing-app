@@ -1,62 +1,73 @@
 'use client';
 
-import React, { FormEvent } from 'react';
+import React, { FormEvent} from 'react';
 import Links from '../Links/Links';
-import Profile from '../Profile/Profile';
-import { useAppSelector } from '@/store/store';
+import { useAppSelector, useAppDispatch } from '@/store/store';
 import SaveButton from '../shared/SaveButton';
+import { DragDropContext, DropResult } from 'react-beautiful-dnd';
+import { updateLinks } from '@/store/user-data-slice';
 
 const Main = () => {
+  const dispatch = useAppDispatch();
   const currentPage = useAppSelector((state) => state.ui.currentPage);
+  const links = useAppSelector((state) => state.user.links);
 
-  const handleSubmitLinks = (e:FormEvent<HTMLFormElement>) => {
+  const handleSubmitLinks = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('links submited')
+    console.log('links submited');
   };
 
   const handleSubmitProfile = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    console.log('profile data submited')
+    e.preventDefault();
+    console.log('profile data submited');
+  };
+
+  const handleOnDragEnd = (result: DropResult) => {
+    if (!result.destination) return;
+    const newLinks = Array.from(links)
+    const [reorderedLinks] = newLinks.splice(result.source.index, 1);
+    newLinks.splice(result.destination.index, 0, reorderedLinks);
+
+    dispatch(updateLinks(newLinks));
   };
 
   return (
-    <div
-      className="
+    <DragDropContext onDragEnd={handleOnDragEnd}>
+      <div
+        className="
         bg-white
         h-full
         w-full
         rounded-[12px]
     "
-    >
-      <div className="h-[88.6%]">
-        {currentPage === 'LINKS' ? (
-          <form
-            id='links-form'
-            onSubmit={(e: FormEvent<HTMLFormElement>) => handleSubmitLinks(e)}
-          >
-            <Links />
-          </form>
-        ) : (
+      >
+        <div className="h-[88.6%]">
+          {currentPage === 'LINKS' ? (
             <form
-              id='profile-form'
-              onSubmit={(e: FormEvent<HTMLFormElement>) => handleSubmitProfile(e)}
-          >
+              id="links-form"
+              onSubmit={(e: FormEvent<HTMLFormElement>) => handleSubmitLinks(e)}
+            >
+              <Links />
+            </form>
+          ) : (
+            <form
+              id="profile-form"
+              onSubmit={(e: FormEvent<HTMLFormElement>) =>
+                handleSubmitProfile(e)
+              }
+            >
               {/* <Profile /> */}
               <div>profile</div>
-          </form>
-        )}
-      </div>
+            </form>
+          )}
+        </div>
 
-      <div className="h-[5.875rem] border-t-[2px] border-t-lines">
-        <SaveButton />
+        <div className="h-[5.875rem] border-t-[2px] border-t-lines">
+          <SaveButton />
+        </div>
       </div>
-    </div>
+    </DragDropContext>
   );
 };
 
 export default Main;
-
-// <button
-//   type="submit"
-//   form={currentPage === 'LINKS' ? 'links-form' : 'profile-form'}
-// ></button>
