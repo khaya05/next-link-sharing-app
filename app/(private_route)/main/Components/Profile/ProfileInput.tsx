@@ -1,17 +1,20 @@
 'use client';
 
 import clsx from 'clsx';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 interface Props {
+  name: string;
   label: string;
   type: string;
   placeholder: string;
+  value: string,
+  onChange: (e: ChangeEvent<HTMLElement>) => void;
 }
 
-const ProfileInput: React.FC<Props> = ({ label, type, placeholder }) => {
+const ProfileInput: React.FC<Props> = ({ label, type, placeholder, value, onChange, name }) => {
   const [onFocus, setOnFocus] = useState(false);
-  const isValid = !true;
+  const isValid = true;
 
   return (
     <div
@@ -45,10 +48,13 @@ const ProfileInput: React.FC<Props> = ({ label, type, placeholder }) => {
       >
         <input
           type={type}
+          name={name}
           placeholder={placeholder}
           onFocus={() => setOnFocus(true)}
           onBlur={() => setOnFocus(false)}
           required={true}
+          value={value}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e)}
           className={clsx(
             "bg-inherit",
             "text-gray",
