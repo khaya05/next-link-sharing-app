@@ -6,6 +6,7 @@ import { useAppSelector, useAppDispatch } from '@/store/store';
 import SaveButton from '../shared/SaveButton';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { updateLinks } from '@/store/user-data-slice';
+import Profile from '../Profile/Profile';
 
 const Main = () => {
   const dispatch = useAppDispatch();
@@ -56,8 +57,7 @@ const Main = () => {
                 handleSubmitProfile(e)
               }
             >
-              {/* <Profile /> */}
-              <div>profile</div>
+              <Profile />
             </form>
           )}
         </div>
