@@ -6,7 +6,7 @@ interface InitialState {
 
 
 const initialState: InitialState = {
-  currentPage: 'LINKS',
+  currentPage: 'PROFILE',
 };
 
 export const uiSlice = createSlice({

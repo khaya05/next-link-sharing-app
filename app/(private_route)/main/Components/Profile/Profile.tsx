@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import LinkForm from '../Links/LinkInput';
 import Heading from '../shared/Heading';
+import ProfilePic from './ProfilePic';
+import UserDetails from './UserDetails';
 
 const Profile = () => {
   return (
@@ -11,6 +13,8 @@ const Profile = () => {
         title="Profile Details"
         legend="Add your details to create a personal touch to your profile."
       />
+      <ProfilePic />
+      <UserDetails />
     </div>
   );
 };
