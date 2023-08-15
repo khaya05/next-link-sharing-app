@@ -1,13 +1,14 @@
 'use client';
 
-import { useAppSelector } from "@/store/store";
-
-// interface Props {
-//   onClick:MouseEvent
-// }
+import { useAppSelector } from '@/store/store';
+import { useMemo } from 'react';
 
 const SaveButton = () => {
-  const currentPage = useAppSelector(state => state.ui.currentPage)
+  const currentPage = useAppSelector((state) => state.ui.currentPage);
+  const form = useMemo(
+    () => (currentPage === 'LINKS' ? 'links-form' : 'profile-form'),
+    [currentPage]
+  );
 
   return (
     <div
@@ -18,8 +19,8 @@ const SaveButton = () => {
     "
     >
       <button
-        type='submit'
-        form={currentPage === 'LINKS' ? 'links-form' : 'profile-form'}
+        type="submit"
+        form={form}
         className="
           h-[2.875rem]
           w-[5.6875rem]

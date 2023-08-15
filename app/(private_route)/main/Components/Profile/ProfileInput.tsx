@@ -9,7 +9,7 @@ interface Props {
   type: string;
   placeholder: string;
   value: string,
-  onChange: (e: ChangeEvent<HTMLElement>) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const ProfileInput: React.FC<Props> = ({ label, type, placeholder, value, onChange, name }) => {
