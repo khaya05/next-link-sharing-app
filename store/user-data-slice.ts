@@ -18,7 +18,7 @@ const initialState: InitialState = {
   firstName: '',
   lastName: '',
   email: '',
-  profilePic: '',
+  profilePic: '/images/profile-pic.jpg',
   links: [],
 };
 

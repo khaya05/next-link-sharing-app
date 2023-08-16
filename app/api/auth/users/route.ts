@@ -1,5 +1,5 @@
 import startDb from '@/app/libs/mongoAdapter';
-import User from '@/models/User';
+import User from '@/app/models/User';
 import { NextResponse } from 'next/server';
 
 interface NewUserRequest {

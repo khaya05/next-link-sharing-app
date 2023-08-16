@@ -5,11 +5,13 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import clientPromise from '@/app/libs/mongoAdapter';
 import { MongoDBAdapter } from '@auth/mongodb-adapter';
 import startDb from '@/app/libs/mongoAdapter';
-import User from '@/models/User';
+import User from '@/app/models/User';
 
 export const authOptions: AuthOptions = {
   // Configure one or more authentication providers
-  adapter: MongoDBAdapter(startDb),
+  adapter: MongoDBAdapter({
+    db: startDb().then((connection) => connection.connection.db),
+  }),
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -54,6 +56,15 @@ export const authOptions: AuthOptions = {
         (session.user as { id: string }).id = token.id as string;
       }
       return session;
+    },
+
+    async signIn(params) {
+      // Redirect to '/' after successful login
+      return Promise.resolve(true); // Indicates successful sign in
+    },
+
+    async redirect(params) {
+      return params.baseUrl; // Redirect to the home page
     },
   },
   debug: process.env.NODE_ENV === 'development',

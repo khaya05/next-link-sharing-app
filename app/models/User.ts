@@ -1,10 +1,25 @@
 import { Document, Schema, model, models } from 'mongoose';
 import bcrypt from 'bcrypt';
 import { Model } from 'mongoose';
+import validator from 'validator';
+
+interface Link {
+  platform: string;
+  link: string;
+}
+
+const LinkSchema = new Schema<Link>({
+  platform: { type: String, required: true },
+  link: { type: String, required: true },
+});
 
 interface IUserDocument extends Document {
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
+  profilePic: string;
+  links: [];
 }
 
 interface IMethods {
@@ -12,15 +27,29 @@ interface IMethods {
 }
 
 const userSchema = new Schema<IUserDocument, {}, IMethods>({
+  firstName: {
+    type: String,
+    default: '',
+  },
+  lastName: {
+    type: String,
+    default: '',
+  },
   email: {
     type: String,
     required: true,
     unique: true,
+    lowercase: true,
+    validate: [validator.isEmail, 'Please provide a valid email'],
   },
   password: {
     type: String,
     required: true,
   },
+  profilePic: {
+    type: String,
+  },
+  links: [LinkSchema],
 });
 
 //hash the password before saving

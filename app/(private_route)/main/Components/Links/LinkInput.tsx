@@ -37,8 +37,7 @@ const LinkInput: React.FC<Props> = ({ id, no }) => {
 
   return (
     <div className="bg-light-gray p-5 rounded-[12px] mb-6">
-      <div
-        className=" flex justify-between items-center text-gray text-base">
+      <div className=" flex justify-between items-center text-gray text-base">
         <div className="flex gap-2 items-center mb-3">
           <Image
             width={16}
@@ -49,7 +48,12 @@ const LinkInput: React.FC<Props> = ({ id, no }) => {
           <p className="font-bold">Link #{no}</p>
         </div>
 
-        <button onClick={() => handleRemoveLink(id)}>Remove</button>
+        <button
+          className="hover:underline"
+          onClick={() => handleRemoveLink(id)}
+        >
+          Remove
+        </button>
       </div>
 
       {/* dropdown */}

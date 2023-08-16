@@ -67,9 +67,8 @@ export default function AuthForm() {
     const res = await fetch('/api/auth/users', {
       method: 'POST',
       body: JSON.stringify(credentials),
-    }).then((res) => res.json());
-
-    console.log(res);
+    })
+    console.log(res)
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -85,6 +84,10 @@ export default function AuthForm() {
     }
     console.log(isInputValid);
   };
+
+  const handleGoogleLogin = () => {
+    signIn('google')
+  }
 
   return (
     <div
@@ -134,7 +137,7 @@ export default function AuthForm() {
           {legend}
         </legend>
 
-        <GoogleLogin />
+        <GoogleLogin onClick={handleGoogleLogin} />
 
         <div>
           <InputWithIcon

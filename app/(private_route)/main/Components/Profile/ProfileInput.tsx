@@ -34,7 +34,7 @@ const ProfileInput: React.FC<Props> = ({ label, type, placeholder, value, onChan
           'border',
           'border-lines',
           'h-full',
-          'w-[62%]',
+          'w-[67%]',
           'rounded-[8px]',
           'px-4',
           isValid && 'hover:border-0',

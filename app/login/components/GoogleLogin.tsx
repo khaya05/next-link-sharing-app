@@ -1,9 +1,13 @@
 'use client';
 import { FcGoogle } from 'react-icons/fc';
 
-export default function GoogleLogin() {
+interface Props{
+  onClick: () => void;
+}
+
+const GoogleLogin:React.FC<Props> = ({ onClick })=> {
   return (
-    <div>
+    <div onClick={onClick}>
       <div
         className="
           grid 
@@ -31,3 +35,5 @@ export default function GoogleLogin() {
     </div>
   );
 }
+
+export default  GoogleLogin
