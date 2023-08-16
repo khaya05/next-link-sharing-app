@@ -7,15 +7,31 @@ import SaveButton from '../shared/SaveButton';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { updateLinks } from '@/store/user-data-slice';
 import Profile from '../Profile/Profile';
+import axios from 'axios'
 
 const Main = () => {
   const dispatch = useAppDispatch();
+  const user = useAppSelector(state => state.user)
   const currentPage = useAppSelector((state) => state.ui.currentPage);
   const links = useAppSelector((state) => state.user.links);
 
-  const handleSubmitLinks = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmitLinks = async  (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('links submited');
+      try {
+        const response = await axios.post('/api/links', {
+          userId: user.id,
+          links: user.links,
+        });
+
+        if (response.ok) {
+          console.log(response);
+        } else {
+          // Handle error response
+          console.error('Error adding links');
+        }
+      } catch (error) {
+        console.error('Error sending POST request', error);
+      }
   };
 
   const handleSubmitProfile = (e: FormEvent<HTMLFormElement>) => {

@@ -6,6 +6,8 @@ import clientPromise from '@/app/libs/mongoAdapter';
 import { MongoDBAdapter } from '@auth/mongodb-adapter';
 import startDb from '@/app/libs/mongoAdapter';
 import User from '@/app/models/User';
+import mongoose from 'mongoose';
+
 
 export const authOptions: AuthOptions = {
   // Configure one or more authentication providers
@@ -53,7 +55,8 @@ export const authOptions: AuthOptions = {
 
     session({ session, token }) {
       if (session.user) {
-        (session.user as { id: string }).id = token.id as string;
+        (session.user as { id: mongoose.Types.ObjectId }).id =
+          token.id as mongoose.Types.ObjectId;
       }
       return session;
     },

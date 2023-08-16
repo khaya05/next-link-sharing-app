@@ -23,6 +23,7 @@ function UserDetails() {
     dispatch(setUserProfile(userData));
   };
 
+
   return (
     <div className="bg-light-gray p-5 rounded-xl flex flex-col gap-3">
       <ProfileInput

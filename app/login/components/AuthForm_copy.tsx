@@ -13,6 +13,8 @@ import GoogleLogin from './GoogleLogin';
 import { signIn } from 'next-auth/react';
 import Alert from '@/app/Components/Error/Alert';
 import { useRouter } from 'next/navigation';
+import { useAppDispatch } from '@/store/store';
+import { setUser } from '@/store/user-data-slice';
 
 type FormAction = 'LOGIN' | 'REGISTER';
 
@@ -26,6 +28,7 @@ export default function AuthForm() {
   const [formType, setFormType] = useState<FormAction>('LOGIN');
   const [error, setError] = useState('');
   const router = useRouter();
+  const dispatch = useAppDispatch()
 
   const heading = formType === 'LOGIN' ? 'Login' : 'Create Account';
   const legend =
@@ -61,6 +64,7 @@ export default function AuthForm() {
 
     if (res?.error) return setError(res.error);
     router.replace('/main');
+
   };
 
   const signUpUser = async () => {
@@ -68,7 +72,11 @@ export default function AuthForm() {
       method: 'POST',
       body: JSON.stringify(credentials),
     })
-    console.log(res)
+    if (res.ok) {
+      const {id} = res.user
+      dispatch(setUser({id}));
+      router.replace('/main');
+    }
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

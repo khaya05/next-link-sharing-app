@@ -12,7 +12,7 @@ import { removeLink, setPlatform, setLink } from '@/store/user-data-slice';
 import './select.css';
 
 interface Props {
-  id: string;
+  id: mongoose.Types.ObjectId;
   no: number;
 }
 
@@ -25,13 +25,16 @@ const LinkInput: React.FC<Props> = ({ id, no }) => {
     dispatch(setPlatform({ id, platform: value }));
   };
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>, id: string) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    id: mongoose.Types.ObjectId
+  ) => {
     e.preventDefault();
     const link = e.target.value;
     dispatch(setLink({ id, link }));
   };
 
-  const handleRemoveLink = (linkId: string) => {
+  const handleRemoveLink = (linkid: mongoose.Types.ObjectId) => {
     dispatch(removeLink(linkId));
   };
 

@@ -8,7 +8,7 @@ interface NewUserRequest {
 }
 
 interface NewUserResponse {
-  id: string;
+  id: mongoose.Types.ObjectId;
   email: string;
   password?: string;
 }

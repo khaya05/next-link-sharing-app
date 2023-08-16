@@ -1,12 +1,14 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import mongoose from 'mongoose';
 
 type Link = {
-  id: string;
+  id: mongoose.Types.ObjectId;
   platform: string;
   link: string;
 };
 
 interface InitialState {
+  id: mongoose.Types.ObjectId;
   firstName: string;
   lastName: string;
   email: string;
@@ -15,6 +17,7 @@ interface InitialState {
 }
 
 const initialState: InitialState = {
+  id: new mongoose.Types.ObjectId(),
   firstName: '',
   lastName: '',
   email: '',
@@ -26,6 +29,9 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
+    setUser: (state, action: PayloadAction<Partial<InitialState>>) => {
+      return { ...state, ...action.payload };
+    },
     setUserProfile: (
       state,
       action: PayloadAction<{
@@ -42,13 +48,6 @@ export const userSlice = createSlice({
 
     addLink: (state, action: PayloadAction<Link>) => {
       state.links.push(action.payload);
-    },
-
-    removeLink: (state, action: PayloadAction<string>) => {
-      const index = state.links.findIndex((link) => link.id === action.payload);
-      if (index !== -1) {
-        state.links = state.links.filter((link) => link.id !== action.payload);
-      }
     },
 
     setPlatform: (state, action: PayloadAction<Partial<Link>>) => {
@@ -76,9 +75,9 @@ export const userSlice = createSlice({
 });
 
 export const {
+  setUser,
   setUserProfile,
   addLink,
-  removeLink,
   setPlatform,
   setLink,
   updateLinks,

@@ -26,31 +26,34 @@ interface IMethods {
   comparePassword(password: string): Promise<boolean>;
 }
 
-const userSchema = new Schema<IUserDocument, {}, IMethods>({
-  firstName: {
-    type: String,
-    default: '',
+const userSchema = new Schema<IUserDocument, {}, IMethods>(
+  {
+    firstName: {
+      type: String,
+      default: '',
+    },
+    lastName: {
+      type: String,
+      default: '',
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      validate: [validator.isEmail, 'Please provide a valid email'],
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    profilePic: {
+      type: String,
+    },
+    links: [LinkSchema],
   },
-  lastName: {
-    type: String,
-    default: '',
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    lowercase: true,
-    validate: [validator.isEmail, 'Please provide a valid email'],
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  profilePic: {
-    type: String,
-  },
-  links: [LinkSchema],
-});
+  { timestamps: true }
+);
 
 //hash the password before saving
 userSchema.pre('save', async function (next) {
