@@ -15,6 +15,7 @@ import Alert from '@/app/Components/Error/Alert';
 import { useRouter } from 'next/navigation';
 import { useAppDispatch } from '@/store/store';
 import { setUser } from '@/store/user-data-slice';
+import axios from 'axios';
 
 type FormAction = 'LOGIN' | 'REGISTER';
 
@@ -28,7 +29,7 @@ export default function AuthForm() {
   const [formType, setFormType] = useState<FormAction>('LOGIN');
   const [error, setError] = useState('');
   const router = useRouter();
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   const heading = formType === 'LOGIN' ? 'Login' : 'Create Account';
   const legend =
@@ -64,18 +65,21 @@ export default function AuthForm() {
 
     if (res?.error) return setError(res.error);
     router.replace('/main');
-
   };
 
   const signUpUser = async () => {
-    const res = await fetch('/api/auth/users', {
-      method: 'POST',
-      body: JSON.stringify(credentials),
-    })
-    if (res.ok) {
-      const {id} = res.user
-      dispatch(setUser({id}));
-      router.replace('/main');
+    try {
+      // http://localhost:3000/api/auth/users
+      const { email, password } = credentials;
+      const res = await axios.post('/api/auth/users', { email, password });
+
+      if (res.statusText === 'OK') {
+        const id = res.data.user.id
+        dispatch(setUser({id}));
+        router.push('/main');
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -94,8 +98,8 @@ export default function AuthForm() {
   };
 
   const handleGoogleLogin = () => {
-    signIn('google')
-  }
+    signIn('google');
+  };
 
   return (
     <div

@@ -27,7 +27,7 @@ type NewResponse = NextResponse<{
 export async function POST(req: NextRequest) {
   const { userId, links } = (await req.json()) as NewUserRequest;
 
-  console.log({ links });
+  console.log('server', { userId, links });
 
   try {
     // Find the user by userId

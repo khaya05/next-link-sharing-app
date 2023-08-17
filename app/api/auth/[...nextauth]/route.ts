@@ -12,7 +12,7 @@ import mongoose from 'mongoose';
 export const authOptions: AuthOptions = {
   // Configure one or more authentication providers
   adapter: MongoDBAdapter({
-    db: startDb().then((connection) => connection.connection.db),
+    db: startDb()
   }),
   providers: [
     GoogleProvider({

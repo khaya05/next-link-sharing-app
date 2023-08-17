@@ -7,7 +7,8 @@ import OptionTypeBase from 'react-select';
 import InputWithIcon from '@/app/Components/Input/InputWithIcon_copy';
 import platformOptions from './platforms';
 import { useAppDispatch } from '@/store/store';
-import { removeLink, setPlatform, setLink } from '@/store/user-data-slice';
+import { setPlatform, setLink } from '@/store/user-data-slice';
+import mongoose from 'mongoose';
 
 import './select.css';
 
@@ -35,7 +36,7 @@ const LinkInput: React.FC<Props> = ({ id, no }) => {
   };
 
   const handleRemoveLink = (linkid: mongoose.Types.ObjectId) => {
-    dispatch(removeLink(linkId));
+  
   };
 
   return (
