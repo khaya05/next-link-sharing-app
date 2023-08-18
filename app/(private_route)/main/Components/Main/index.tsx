@@ -1,37 +1,36 @@
 'use client';
 
-import React, { FormEvent} from 'react';
+import React, { FormEvent } from 'react';
 import Links from '../Links/Links';
 import { useAppSelector, useAppDispatch } from '@/store/store';
 import SaveButton from '../shared/SaveButton';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { updateLinks } from '@/store/user-data-slice';
 import Profile from '../Profile/Profile';
-import axios from 'axios'
+import axios from 'axios';
 
 const Main = () => {
   const dispatch = useAppDispatch();
-  const user = useAppSelector(state => state.user)
+  const user = useAppSelector((state) => state.user);
   const currentPage = useAppSelector((state) => state.ui.currentPage);
   const links = useAppSelector((state) => state.user.links);
 
-  const handleSubmitLinks = async  (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmitLinks = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-      try {
-        const response = await axios.post('/api/links', {
-          userId: user.id,
-          links: user.links,
-        });
+    try {
+      const response = await axios.post('/api/links', {
+        userId: '64dda7e1aadd0c2311ea0c58',
+        links,
+      });
 
-        if (response.ok) {
-          console.log(response);
-        } else {
-          // Handle error response
-          console.error('Error adding links');
-        }
-      } catch (error) {
-        console.error('Error sending POST request', error);
+      if (response.status === 201) {
+        console.log('Links added successfully');
+      } else {
+        console.error('Error adding links');
       }
+    } catch (error) {
+      console.error('Error sending POST request', error);
+    }
   };
 
   const handleSubmitProfile = (e: FormEvent<HTMLFormElement>) => {
@@ -41,7 +40,7 @@ const Main = () => {
 
   const handleOnDragEnd = (result: DropResult) => {
     if (!result.destination) return;
-    const newLinks = Array.from(links)
+    const newLinks = Array.from(links);
     const [reorderedLinks] = newLinks.splice(result.source.index, 1);
     newLinks.splice(result.destination.index, 0, reorderedLinks);
 

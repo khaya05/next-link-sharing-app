@@ -10,7 +10,7 @@ const RenderLinks = () => {
   return (
     <>
       {links.map((link, index) => (
-        <Draggable key={link.id} draggableId={link.id} index={index}>
+        <Draggable key={link.id} draggableId={link.id.toString()} index={index}>
           {(provided) => (
             <div
               {...provided.draggableProps}

@@ -74,8 +74,8 @@ export default function AuthForm() {
       const res = await axios.post('/api/auth/users', { email, password });
 
       if (res.statusText === 'OK') {
-        const id = res.data.user.id
-        dispatch(setUser({id}));
+        const id = res.data.user.id;
+        dispatch(setUser({ id }));
         router.push('/main');
       }
     } catch (error) {

@@ -6,22 +6,24 @@ import { useAppDispatch, useAppSelector } from '@/store/store';
 import { MouseEventHandler, useMemo } from 'react';
 import RenderLinks from './RenderLinks';
 import { addLink } from '@/store/user-data-slice';
-import { nanoid } from 'nanoid';
 import { Droppable } from 'react-beautiful-dnd';
+import mongoose from 'mongoose';
 
 function Links() {
   const dispatch = useAppDispatch();
   const links = useAppSelector((state) => state.user.links);
   const hasLinks = useMemo(() => links.length !== 0, [links]);
 
-  const handleClick: MouseEventHandler<HTMLButtonElement> = () => {
+  const addNewLink: MouseEventHandler<HTMLButtonElement> = () => {
     const newLinkForm = {
-      id: nanoid(),
+      id: new mongoose.Types.ObjectId(),
       link: '',
       platform: '',
     };
     dispatch(addLink(newLinkForm));
   };
+
+  console.log(links)
 
   return (
     <div className="md:p-10">
@@ -30,7 +32,7 @@ function Links() {
         legend="Add/edit/remove links below and then share all your profiles with the world!"
       />
       <button
-        onClick={handleClick}
+        onClick={addNewLink}
         type="button"
         className="
           w-full

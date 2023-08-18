@@ -8,7 +8,7 @@ interface Link {
 }
 
 interface NewUserRequest {
-  userid: mongoose.Types.ObjectId;
+  userId: mongoose.Types.ObjectId;
   links: Link[];
 }
 
@@ -25,11 +25,10 @@ type NewResponse = NextResponse<{
 }>;
 
 export async function POST(req: NextRequest) {
-  const { userId, links } = (await req.json()) as NewUserRequest;
-
-  console.log('server', { userId, links });
-
   try {
+    const { userId, links } = (await req.json()) as NewUserRequest;
+
+    console.log('server', { userId, links });
     // Find the user by userId
     const user = await User.findById(userId);
 
@@ -37,10 +36,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    // Add the new links to the user's links array
-    user.links = links;
-    // Save the user with the new links
-    await user.save();
+    await User.findByIdAndUpdate(userId, { links });
 
     return NextResponse.json({
       status: 201,
