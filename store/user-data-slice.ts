@@ -1,8 +1,9 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import mongoose from 'mongoose';
+import nanoid from 'nanoid';
 
 type Link = {
-  id: mongoose.Types.ObjectId;
+  id: string;
   platform: string;
   link: string;
 };
@@ -50,6 +51,10 @@ export const userSlice = createSlice({
       state.links.push(action.payload);
     },
 
+    removeLink: (state, action: PayloadAction<string>) => {
+      state.links = state.links.filter(item => item.id !== action.payload);
+    },
+
     setPlatform: (state, action: PayloadAction<Partial<Link>>) => {
       const index = state.links.findIndex(
         (link) => link.id === action.payload.id
@@ -78,6 +83,7 @@ export const {
   setUser,
   setUserProfile,
   addLink,
+  removeLink,
   setPlatform,
   setLink,
   updateLinks,

@@ -7,7 +7,7 @@ import { MouseEventHandler, useMemo } from 'react';
 import RenderLinks from './RenderLinks';
 import { addLink } from '@/store/user-data-slice';
 import { Droppable } from 'react-beautiful-dnd';
-import mongoose from 'mongoose';
+import { nanoid } from 'nanoid';
 
 function Links() {
   const dispatch = useAppDispatch();
@@ -16,14 +16,14 @@ function Links() {
 
   const addNewLink: MouseEventHandler<HTMLButtonElement> = () => {
     const newLinkForm = {
-      id: new mongoose.Types.ObjectId(),
+      id: nanoid(),
       link: '',
       platform: '',
     };
     dispatch(addLink(newLinkForm));
   };
 
-  console.log(links)
+  console.log(links);
 
   return (
     <div className="md:p-10">

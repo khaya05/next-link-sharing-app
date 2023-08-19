@@ -1,6 +1,6 @@
 'use client';
 
-import React, { FormEvent } from 'react';
+import React, { FormEvent, useMemo } from 'react';
 import Links from '../Links/Links';
 import { useAppSelector, useAppDispatch } from '@/store/store';
 import SaveButton from '../shared/SaveButton';
@@ -15,22 +15,16 @@ const Main = () => {
   const currentPage = useAppSelector((state) => state.ui.currentPage);
   const links = useAppSelector((state) => state.user.links);
 
-  const handleSubmitLinks = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post('/api/links', {
-        userId: '64dda7e1aadd0c2311ea0c58',
-        links,
-      });
+  // exclude id
+  const newLinks = useMemo(() => {
+    return links.map(({ link, platform }) => {
+      return { link, platform };
+    });
+  }, [links]);
 
-      if (response.status === 201) {
-        console.log('Links added successfully');
-      } else {
-        console.error('Error adding links');
-      }
-    } catch (error) {
-      console.error('Error sending POST request', error);
-    }
+  const handleSubmitLinks = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
   };
 
   const handleSubmitProfile = (e: FormEvent<HTMLFormElement>) => {

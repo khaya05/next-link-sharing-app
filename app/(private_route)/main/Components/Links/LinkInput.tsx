@@ -7,13 +7,13 @@ import OptionTypeBase from 'react-select';
 import InputWithIcon from '@/app/Components/Input/InputWithIcon_copy';
 import platformOptions from './platforms';
 import { useAppDispatch } from '@/store/store';
-import { setPlatform, setLink } from '@/store/user-data-slice';
+import { setPlatform, setLink, removeLink } from '@/store/user-data-slice';
 import mongoose from 'mongoose';
 
 import './select.css';
 
 interface Props {
-  id: mongoose.Types.ObjectId;
+  id: string;
   no: number;
 }
 
@@ -35,7 +35,8 @@ const LinkInput: React.FC<Props> = ({ id, no }) => {
     dispatch(setLink({ id, link }));
   };
 
-  const handleRemoveLink = (linkid: mongoose.Types.ObjectId) => {
+  const handleRemoveLink = (linkId: string) => {
+    dispatch(removeLink(linkId))
   
   };
 
