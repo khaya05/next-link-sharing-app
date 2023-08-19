@@ -9,7 +9,7 @@ type Link = {
 };
 
 interface InitialState {
-  id: mongoose.Types.ObjectId;
+  id: any;
   firstName: string;
   lastName: string;
   email: string;
@@ -18,7 +18,7 @@ interface InitialState {
 }
 
 const initialState: InitialState = {
-  id: new mongoose.Types.ObjectId(),
+  id: '',
   firstName: '',
   lastName: '',
   email: '',

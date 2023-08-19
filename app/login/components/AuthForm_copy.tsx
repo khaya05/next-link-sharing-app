@@ -64,6 +64,7 @@ export default function AuthForm() {
     });
 
     if (res?.error) return setError(res.error);
+    dispatch(setUser({ id }));
     router.replace('/main');
   };
 

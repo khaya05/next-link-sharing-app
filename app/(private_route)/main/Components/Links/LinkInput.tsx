@@ -28,7 +28,7 @@ const LinkInput: React.FC<Props> = ({ id, no }) => {
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement>,
-    id: mongoose.Types.ObjectId
+    id: string
   ) => {
     e.preventDefault();
     const link = e.target.value;

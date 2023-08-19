@@ -2,11 +2,15 @@ import axios from 'axios';
 
 type Link = { link: string; platform: string };
 
-export const submitLinksToDb = async function (userId: string, links: Link) {
+export const submitLinksToDb = async function (userId: any, links: Link[]) {
+  const newLinks = links.map(({ link, platform }) => {
+    return { link, platform };
+  });
+
   try {
     const response = await axios.post('/api/links', {
       userId,
-      links,
+      links: newLinks,
     });
 
     if (response.status === 201) {
