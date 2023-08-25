@@ -18,11 +18,13 @@ const Main = () => {
   const links = useAppSelector((state) => state.user.links);
 
   const { data: session, status } = useSession();
-  console.log({ session , status});
 
   const handleSubmitLinks = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    submitLinksToDb(user.id, links);
+    if (status !== 'loading' && session?.user) {
+      const userId = session.user.id;
+      submitLinksToDb(userId, links);
+    }
   };
 
   const handleSubmitProfile = (e: FormEvent<HTMLFormElement>) => {

@@ -9,7 +9,7 @@ type Link = {
 };
 
 interface InitialState {
-  id: any;
+  // id: any;
   firstName: string;
   lastName: string;
   email: string;
@@ -18,7 +18,7 @@ interface InitialState {
 }
 
 const initialState: InitialState = {
-  id: '',
+  // id: '',
   firstName: '',
   lastName: '',
   email: '',
