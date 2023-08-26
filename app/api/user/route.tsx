@@ -1,3 +1,4 @@
+import startDb from '@/app/libs/mongoAdapter';
 import User from '@/app/models/User';
 import mongoose from 'mongoose';
 import { NextResponse, NextRequest } from 'next/server';
@@ -10,8 +11,10 @@ export async function GET(req: NextRequest) {
   try {
     const { userId } = (await req.json()) as NewUserRequest;
 
-    console.log('server',  userId );
+    console.log('server', userId);
     // Find the user by userId
+    await startDb();
+
     const user = await User.findById(userId);
 
     if (!user) {
@@ -23,7 +26,7 @@ export async function GET(req: NextRequest) {
       user,
     });
   } catch (error) {
-    console.log(error);
-    return NextResponse.json({ error: 500, message: 'Internal Server Error' });
+    console.log(error.message);
+    return new NextResponse.json({ error: 500, message: 'Internal Server Error' });
   }
 }

@@ -2,8 +2,12 @@ import axios from 'axios';
 
 export const getUserFromDB = async function (userId: string) {
   try {
-    const response = await axios('/api/user', {
-      userId,
+    const response = await axios({
+      method: 'get',
+      url: '/api/user',
+      data: {
+        userId
+      },
     });
 
     if (response.status === 200) {
