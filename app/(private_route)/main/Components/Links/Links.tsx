@@ -23,8 +23,6 @@ function Links() {
     dispatch(addLink(newLinkForm));
   };
 
-  console.log(links);
-
   return (
     <div className="md:p-10">
       <Heading

@@ -4,18 +4,20 @@ import {
   ChangeEvent,
   FormEvent,
   FormEventHandler,
+  useEffect,
   useRef,
   useState,
 } from 'react';
 import FullLogo from '../../Components/Logo/FullLogo';
 import InputWithIcon from './InputWithIcon_copy';
 import GoogleLogin from './GoogleLogin';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import Alert from '@/app/Components/Error/Alert';
 import { useRouter } from 'next/navigation';
 import { useAppDispatch } from '@/store/store';
 import { setUser } from '@/store/user-data-slice';
 import axios from 'axios';
+import { getUserFromDB } from '@/app/libs/getUser';
 
 type FormAction = 'LOGIN' | 'REGISTER';
 
@@ -64,7 +66,6 @@ export default function AuthForm() {
     });
 
     if (res?.error) return setError(res.error);
-    dispatch(setUser({ id }));
     router.replace('/main');
   };
 

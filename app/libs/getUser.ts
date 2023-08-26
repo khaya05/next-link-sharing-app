@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-export const submitLinksToDb = async function (userId: string) {
+export const getUserFromDB = async function (userId: string) {
   try {
-    const response = await axios.post('/api/user', {
+    const response = await axios('/api/user', {
       userId,
     });
 
